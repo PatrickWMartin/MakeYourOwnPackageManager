@@ -1,0 +1,14 @@
+{
+  "name": "makeyourownpackagemanager",
+  "version": "1.0.0",
+  "description": "A project to make my own version of a package manager based of npm",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "mypm": "./bin/index.js"
+  }
+}
