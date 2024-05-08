@@ -16,6 +16,10 @@ const usageGuide = function(){
     console.log(usageText);
 }
 
+if (args[2].length < 3){
+    usageGuide();
+    process.exit(1);
+}
 switch(args[2]) {
   case 'help':
     usageGuide();
@@ -28,9 +32,6 @@ switch(args[2]) {
     break
   case 'publish':
     console.log('publish called');
-    break
-  case undefined:
-    usageGuide();
     break
   default:
     console.log(`Unknown mypm command: ${args[2]}`);
