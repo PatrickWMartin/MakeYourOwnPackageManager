@@ -14,7 +14,11 @@ const usage = function(){
     console.log(usageText);
 }
 
-const commands = ['init', 'install', 'publish']
 if (args.length < 3){
     usage();
+}
+
+const commands = ['init', 'install', 'publish']
+if (commands.indexOf(args[2])===-1){
+    console.log("Error: invalid command");
 }
