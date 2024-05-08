@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+import {createMyPackageJson} from '../src/myPackageJsonCreation.js'
 
 const args = process.argv;
 
@@ -16,7 +17,7 @@ const usageGuide = function(){
     console.log(usageText);
 }
 
-if (args[2].length < 3){
+if (args.length < 3){
     usageGuide();
     process.exit(1);
 }
@@ -26,6 +27,7 @@ switch(args[2]) {
     break
   case 'init':
     console.log('init called');
+    createMyPackageJson();
     break
   case 'install':
     console.log('install called');
