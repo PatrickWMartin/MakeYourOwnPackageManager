@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import {createMyPackageJson} from '../src/myPackageJsonCreation.js'
+import {createMyPackageJsonFile} from '../src/myPackageJsonCreation.js'
 
 const args = process.argv;
 
@@ -27,7 +27,7 @@ switch(args[2]) {
     break
   case 'init':
     console.log('init called');
-    createMyPackageJson();
+    createMyPackageJsonFile();
     break
   case 'install':
     console.log('install called');
