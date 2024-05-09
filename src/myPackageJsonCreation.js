@@ -1,10 +1,7 @@
 import {appendFile} from 'fs';
 import promptSync from 'prompt-sync';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { basename } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 const prompt = promptSync();
 
 const myPackageJsonQuestions = function(){
@@ -19,9 +16,10 @@ Use \`npm install <pkg>\` afterwards to install a package and
 save it as a dependency in the package.json file.
 
 Press ^C at any time to quit.`);
-
-    const packageName = prompt(`package name: (${__dirname})`);
+    const cwd = basename(process.cwd());
+    const packageName = prompt(`package name: (${cwd})`);
     console.log(packageName);
+    
 
 }
 
