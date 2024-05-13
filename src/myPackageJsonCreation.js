@@ -1,7 +1,9 @@
 import {appendFile} from 'fs';
 import promptSync from 'prompt-sync';
 import { basename } from 'path';
+import chalk from 'chalk';
 
+const error = chalk.bold.red;
 const prompt = promptSync();
 
 const myPackageJsonQuestions = function(){
@@ -91,10 +93,39 @@ Press ^C at any time to quit.`);
     return myPackageJsonAwnsers;
 }
 
-export const createMyPackageJsonFile = function(){
-    myPackageJsonQuestions();
-    // appendFile('myPackage.json', '{"name": "test"}', function (err) {
-    //   if (err) throw err;
-    //   console.log('myPackage.json created')
-    // });
+const yesFlagPackageJsonQuestions = function(){
+    const myPackageJsonAwnsers = {};
+    const cwd = basename(process.cwd());
+    myPackageJsonAwnsers.title = cwd;
+    myPackageJsonAwnsers.version = '1.0.0';
+    myPackageJsonAwnsers.desription = "";
+    myPackageJsonAwnsers.main = 'index.js';
+    myPackageJsonAwnsers.scripts = {test: "echo \"Error: no test specified\" && exit 1"};
+    myPackageJsonAwnsers.keywords = [];
+    myPackageJsonAwnsers.author = "";
+    myPackageJsonAwnsers.license = 'ISC';
+    console.log(`Wrote to ${process.cwd()}package.json:`)
+    console.log();
+    console.log(myPackageJsonAwnsers);
+
+    return myPackageJsonAwnsers;
+}
+export const createMyPackageJsonFile = function(restOfArgs){
+    let myPackageJsonAwnsers;
+    if (restOfArgs.length === 0){
+        myPackageJsonAwnsers =JSON.stringify(myPackageJsonQuestions());
+    } else{
+        if (restOfArgs[0] === '-y' || restOfArgs[0] === '--yes'){
+            myPackageJsonAwnsers =JSON.stringify(yesFlagPackageJsonQuestions());
+        } else {
+            console.log(error('Error:'), `Unknown flag: ${restOfArgs[0]}` )        
+            console.log('usage: mypm init [-y | --yes]')
+            process.exit(1);
+        }
+    }
+    appendFile('myPackage.json', myPackageJsonAwnsers, function (err) {
+      if (err) {
+        throw err;
+      }
+    });
 }
