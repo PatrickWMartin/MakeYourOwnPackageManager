@@ -60,8 +60,13 @@ Press ^C at any time to quit.`);
                                             url: gitRepo
                                           };
     }
-    //Add the keyword logic later
-    myPackageJsonAwnsers.keywords = [];
+
+    const keywords = prompt('keywords: ');
+    if (keywords === ''){
+        myPackageJsonAwnsers.keywords = [];
+    } else{
+        myPackageJsonAwnsers.keywords = keywords.split(' ');
+    }
 
     const author = prompt('author:');
     myPackageJsonAwnsers.author = author;
