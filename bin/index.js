@@ -1,5 +1,6 @@
 #! /usr/bin/env node
-import {createMyPackageJsonFile} from '../src/myPackageJsonCreation.js'
+import { createMyPackageJsonFile } from '../src/myPackageJsonCreation.js'
+import { createPackageTar } from '../src/publishPackage.js'
 
 const args = process.argv;
 
@@ -33,6 +34,7 @@ switch(args[2]) {
         break
     case 'publish':
         console.log('publish called');
+        createPackageTar();
         break
     default:
         console.log(`Unknown mypm command: ${args[2]}`);
