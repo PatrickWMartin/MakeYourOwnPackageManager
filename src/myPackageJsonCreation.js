@@ -20,7 +20,7 @@ save it as a dependency in the package.json file.
 Press ^C at any time to quit.`);
 
     const cwd = basename(process.cwd());
-    const packageName = prompt(`package name: (${cwd})`);
+    const packageName = prompt(`package name: (${cwd}) `);
     
     if (packageName === ''){
         myPackageJsonAwnsers.title = cwd;
@@ -28,16 +28,38 @@ Press ^C at any time to quit.`);
         myPackageJsonAwnsers.title = packageName;
     }
 
-    const version = prompt('version: (1.0.0)');
+    const version = prompt('version: (1.0.0) ');
     if (version === ''){
         myPackageJsonAwnsers.version = '1.0.0';
     } else{
         myPackageJsonAwnsers.version = version;
     } 
 
-    const description = prompt('description:');
+    const description = prompt('description: ');
     myPackageJsonAwnsers.desription = description;
     
+    const entryPoint = prompt('entry point: (index.js) ');
+    if (entryPoint === ''){
+        myPackageJsonAwnsers.main = 'index.js';
+    } else{
+        myPackageJsonAwnsers.main = entryPoint;
+    }
+    
+    const testCommand = prompt('test command: ');
+    if (testCommand === ''){
+        myPackageJsonAwnsers.scripts = {test: "echo \"Error: no test specified\" && exit 1"};
+    } else{
+        myPackageJsonAwnsers.scripts = {test: testCommand};
+    }
+
+    const gitRepo = prompt('git repository: ');
+    if (gitRepo !== ''){
+
+        myPackageJsonAwnsers.repository = {
+                                            type: "git",
+                                            url: gitRepo
+                                          };
+    }
     //Add the keyword logic later
     myPackageJsonAwnsers.keywords = [];
 
