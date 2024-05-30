@@ -1,6 +1,8 @@
-test('basic test to try to get spyOn working', () => {
-    const logSpy = jest.spyOn(console, 'log');
-    console.log('hello');
+import {jest} from '@jest/globals'
+import { usageGuide, usageText } from '../src/informationalFunctions';
 
-    expect(logSpy).toHaveBeenCalledWith('hello');
+test('Test if usageGuide is calling the write text', () => {
+    const logSpy = jest.spyOn(console, 'log');
+    usageGuide();
+    expect(logSpy).toHaveBeenCalledWith(usageText);
 });
