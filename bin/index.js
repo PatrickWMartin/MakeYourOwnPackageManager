@@ -1,27 +1,16 @@
 #! /usr/bin/env node
 import { createMyPackageJsonFile } from '../src/myPackageJsonCreation.js'
 import { createPackageTar } from '../src/publishPackage.js'
+import { usageGuide } from '../src/informationalFunctions.js';
 
 const args = process.argv;
 
-const usageGuide = function(){
-    const usageText = `
-    mypm <command>
-
-    Usage:
-
-    mypm install    <package_name> add a package dependancy to your project
-    mypm publish    publish a package to the mypm registry
-    mypm init       create a myPackage.json file 
-    mypm help       print usage guide
-    `
-    console.log(usageText);
-}
 
 if (args.length < 3){
     usageGuide();
     process.exit(1);
 }
+
 switch(args[2]) {
     case 'help':
         usageGuide();
