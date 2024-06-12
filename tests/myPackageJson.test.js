@@ -1,9 +1,7 @@
 import {jest} from '@jest/globals';
-import {myPackageJsonQuestions } from '../src/myPackageJsonCreation';
-// import { basename } from 'path';
-// import promptSync from 'prompt-sync';
+import { myPackageJsonQuestions, yesFlagPackageJsonQuestions } from '../src/myPackageJsonCreation';
 
-describe('myPackageJsonQuestions', () => {
+describe('myPackageJsonQuestions function tests', () => {
   let promptMock;
   let logMock;
   let cwdMock;
@@ -91,7 +89,25 @@ describe('myPackageJsonQuestions', () => {
 
     const result = myPackageJsonQuestions(promptMock, logMock, cwdMock, exitMock);
 
-    // expect(result).toBeUndefined();
     expect(exitMock).toHaveBeenCalledWith(1);
   });
+});
+
+describe('yesFlagPackageJsonQuestions function tests', () =>{
+    it('should return default package.json', () => {
+    
+        const result = yesFlagPackageJsonQuestions();
+
+        expect(result).toEqual({
+          title: 'MakeYourOwnPackageManager',
+          version: '1.0.0',
+          desription: '',
+          main: 'index.js',
+          scripts: { test: 'echo "Error: no test specified" && exit 1' },
+          keywords: [],
+          author: '',
+          license: 'ISC',
+        });
+
+    });
 });
