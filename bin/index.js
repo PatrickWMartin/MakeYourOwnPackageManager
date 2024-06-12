@@ -2,6 +2,7 @@
 import { createMyPackageJsonFile } from '../src/myPackageJsonCreation.js'
 import { createPackageTar } from '../src/publishPackage.js'
 import { usageGuide } from '../src/informationalFunctions.js';
+import { getPackageName } from '../src/publishPackage.js';
 
 const args = process.argv;
 
@@ -23,7 +24,7 @@ switch(args[2]) {
         break
     case 'publish':
         console.log('publish called');
-        createPackageTar();
+        getPackageName();
         break
     default:
         console.log(`Unknown mypm command: ${args[2]}`);

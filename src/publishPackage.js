@@ -1,13 +1,26 @@
-import { create } from "tar";
+import { create } from 'tar';
+import { readFileSync } from 'fs';
 
 export const createPackageTar = function(){
     create(
         {
             gzip: true,
-            file: 'myPackageName.tar.gz',
+            file: 'myPackageName.tgz',
             cwd: process.cwd(),
         },
         ['./']
     )
 }
-//First thing to for publishing a package is to be able to put it into a tar.gz
+
+//get package name
+export const getPackageName = function(){
+    try {
+        const myPackageJson = readFileSync('myPackage.json', 'utf8');
+        return JSON.parse(myPackageJson).title;
+    } catch (error) {
+
+        if (error.code === 'ENOENT'){
+            console.error('No myPackage.json file in this directory!');
+        }
+    }
+}
