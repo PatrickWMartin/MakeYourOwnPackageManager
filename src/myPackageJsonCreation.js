@@ -1,4 +1,4 @@
-import {appendFile} from 'fs';
+import { writeFileSync } from 'fs';
 import promptSync from 'prompt-sync';
 import { basename } from 'path';
 import chalk from 'chalk';
@@ -123,7 +123,7 @@ export const createMyPackageJsonFile = function(restOfArgs){
             process.exit(1);
         }
     }
-    appendFile('myPackage.json', myPackageJsonAwnsers, function (err) {
+    writeFileSync('myPackage.json', myPackageJsonAwnsers, function (err) {
       if (err) {
         throw err;
       }
