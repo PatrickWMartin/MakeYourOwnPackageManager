@@ -7,7 +7,7 @@ const error = chalk.bold.red;
 const prompt = promptSync();
 
 export function myPackageJsonQuestions(prompt, log, cwd, exit) {
-  const myPackageJsonAwnsers = {};
+  const myPackageJsonAnswers = {};
 
   log(`
 This utility will walk you through creating a package.json file.
@@ -24,53 +24,53 @@ Press ^C at any time to quit.`);
   const cwdName = basename(cwd());
   const packageName = prompt(`package name: (${cwdName}) `);
 
-  myPackageJsonAwnsers.title = packageName === '' ? cwdName : packageName;
+  myPackageJsonAnswers.title = packageName === '' ? cwdName : packageName;
 
   const version = prompt('version: (1.0.0) ');
-  myPackageJsonAwnsers.version = version === '' ? '1.0.0' : version;
+  myPackageJsonAnswers.version = version === '' ? '1.0.0' : version;
 
   const description = prompt('description: ');
-  myPackageJsonAwnsers.desription = description;
+  myPackageJsonAnswers.desription = description;
 
   const entryPoint = prompt('entry point: (index.js) ');
-  myPackageJsonAwnsers.main = entryPoint === '' ? 'index.js' : entryPoint;
+  myPackageJsonAnswers.main = entryPoint === '' ? 'index.js' : entryPoint;
 
   const testCommand = prompt('test command: ');
-  myPackageJsonAwnsers.scripts = {
+  myPackageJsonAnswers.scripts = {
     test: testCommand === '' ? 'echo "Error: no test specified" && exit 1' : testCommand
   };
 
   const gitRepo = prompt('git repository: ');
   if (gitRepo !== '') {
-    myPackageJsonAwnsers.repository = {
+    myPackageJsonAnswers.repository = {
       type: 'git',
       url: gitRepo
     };
   }
 
   const keywords = prompt('keywords: ');
-  myPackageJsonAwnsers.keywords = keywords === '' ? [] : keywords.split(' ');
+  myPackageJsonAnswers.keywords = keywords === '' ? [] : keywords.split(' ');
 
   const author = prompt('author:');
-  myPackageJsonAwnsers.author = author;
+  myPackageJsonAnswers.author = author;
 
-  const license = prompt('license (ISC);');
-  myPackageJsonAwnsers.license = license === '' ? 'ISC' : license;
+  const license = prompt('license (ISC): ');
+  myPackageJsonAnswers.license = license === '' ? 'ISC' : license;
 
   log(`About to write to ${cwd()}package.json:`);
   log();
-  log(myPackageJsonAwnsers);
+  log(myPackageJsonAnswers);
 
   const isOk = prompt('Is this OK? (yes)');
-  if (isOk !== '' && isOk[0] !== 'y') {
+  if (isOk !== '' && isOk[0].toLowerCase() !== 'y') {
     log('Aborted');
     exit(1);
   }
 
-  return myPackageJsonAwnsers;
+  return myPackageJsonAnswers;
 }
 
-const yesFlagPackageJsonQuestions = function(){
+export const yesFlagPackageJsonQuestions = function(){
     const myPackageJsonAwnsers = {};
     const cwd = basename(process.cwd());
     myPackageJsonAwnsers.title = cwd;
