@@ -6,10 +6,10 @@ import chalk from 'chalk';
 const error = chalk.bold.red;
 const prompt = promptSync();
 
-const myPackageJsonQuestions = function(){
-    const myPackageJsonAwnsers = {};
+export function myPackageJsonQuestions(prompt, log, cwd, exit) {
+  const myPackageJsonAwnsers = {};
 
-    console.log(`
+  log(`
 This utility will walk you through creating a package.json file.
 It only covers the most common items, and tries to guess sensible defaults.
 
@@ -21,76 +21,53 @@ save it as a dependency in the package.json file.
 
 Press ^C at any time to quit.`);
 
-    const cwd = basename(process.cwd());
-    const packageName = prompt(`package name: (${cwd}) `);
-    
-    if (packageName === ''){
-        myPackageJsonAwnsers.title = cwd;
-    } else {
-        myPackageJsonAwnsers.title = packageName;
-    }
+  const cwdName = basename(cwd());
+  const packageName = prompt(`package name: (${cwdName}) `);
 
-    const version = prompt('version: (1.0.0) ');
-    if (version === ''){
-        myPackageJsonAwnsers.version = '1.0.0';
-    } else{
-        myPackageJsonAwnsers.version = version;
-    } 
+  myPackageJsonAwnsers.title = packageName === '' ? cwdName : packageName;
 
-    const description = prompt('description: ');
-    myPackageJsonAwnsers.desription = description;
-    
-    const entryPoint = prompt('entry point: (index.js) ');
-    if (entryPoint === ''){
-        myPackageJsonAwnsers.main = 'index.js';
-    } else{
-        myPackageJsonAwnsers.main = entryPoint;
-    }
-    
-    const testCommand = prompt('test command: ');
-    if (testCommand === ''){
-        myPackageJsonAwnsers.scripts = {test: "echo \"Error: no test specified\" && exit 1"};
-    } else{
-        myPackageJsonAwnsers.scripts = {test: testCommand};
-    }
+  const version = prompt('version: (1.0.0) ');
+  myPackageJsonAwnsers.version = version === '' ? '1.0.0' : version;
 
-    const gitRepo = prompt('git repository: ');
-    if (gitRepo !== ''){
+  const description = prompt('description: ');
+  myPackageJsonAwnsers.desription = description;
 
-        myPackageJsonAwnsers.repository = {
-                                            type: "git",
-                                            url: gitRepo
-                                          };
-    }
+  const entryPoint = prompt('entry point: (index.js) ');
+  myPackageJsonAwnsers.main = entryPoint === '' ? 'index.js' : entryPoint;
 
-    const keywords = prompt('keywords: ');
-    if (keywords === ''){
-        myPackageJsonAwnsers.keywords = [];
-    } else{
-        myPackageJsonAwnsers.keywords = keywords.split(' ');
-    }
+  const testCommand = prompt('test command: ');
+  myPackageJsonAwnsers.scripts = {
+    test: testCommand === '' ? 'echo "Error: no test specified" && exit 1' : testCommand
+  };
 
-    const author = prompt('author:');
-    myPackageJsonAwnsers.author = author;
+  const gitRepo = prompt('git repository: ');
+  if (gitRepo !== '') {
+    myPackageJsonAwnsers.repository = {
+      type: 'git',
+      url: gitRepo
+    };
+  }
 
-    const license = prompt('license (ISC);');
-    if (license === ''){
-        myPackageJsonAwnsers.license = 'ISC';
-    } else{
-        myPackageJsonAwnsers.license = license;
-    }
-    console.log(`About to write to ${process.cwd()}package.json:`)
-    console.log();
-    console.log(myPackageJsonAwnsers);
+  const keywords = prompt('keywords: ');
+  myPackageJsonAwnsers.keywords = keywords === '' ? [] : keywords.split(' ');
 
-    const isOk = prompt('Is this OK? (yes)');
-    //npm at least in version 10.2.3 only checks if the first letter of the ok prompt response is y
-    if (isOk !== '' && isOk[0] !== 'y'){
-        console.log('Aborted');
-        process.exit(1);
-    } 
-    
-    return myPackageJsonAwnsers;
+  const author = prompt('author:');
+  myPackageJsonAwnsers.author = author;
+
+  const license = prompt('license (ISC);');
+  myPackageJsonAwnsers.license = license === '' ? 'ISC' : license;
+
+  log(`About to write to ${cwd()}package.json:`);
+  log();
+  log(myPackageJsonAwnsers);
+
+  const isOk = prompt('Is this OK? (yes)');
+  if (isOk !== '' && isOk[0] !== 'y') {
+    log('Aborted');
+    exit(1);
+  }
+
+  return myPackageJsonAwnsers;
 }
 
 const yesFlagPackageJsonQuestions = function(){
@@ -113,10 +90,10 @@ const yesFlagPackageJsonQuestions = function(){
 export const createMyPackageJsonFile = function(restOfArgs){
     let myPackageJsonAwnsers;
     if (restOfArgs.length === 0){
-        myPackageJsonAwnsers =JSON.stringify(myPackageJsonQuestions());
+        myPackageJsonAwnsers = JSON.stringify(myPackageJsonQuestions(prompt, console.log, process.cwd, process.exit));
     } else{
         if (restOfArgs[0] === '-y' || restOfArgs[0] === '--yes'){
-            myPackageJsonAwnsers =JSON.stringify(yesFlagPackageJsonQuestions());
+            myPackageJsonAwnsers = JSON.stringify(yesFlagPackageJsonQuestions());
         } else {
             console.log(error('Error:'), `Unknown flag: ${restOfArgs[0]}` )        
             console.log('usage: mypm init [-y | --yes]')
