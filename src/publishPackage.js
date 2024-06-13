@@ -1,11 +1,11 @@
 import { create } from 'tar';
 import { readFileSync } from 'fs';
 
-export const createPackageTar = function(){
+export const createPackageTar = function(packageName){
     create(
         {
             gzip: true,
-            file: 'myPackageName.tgz',
+            file: `${packageName}.tgz`,
             cwd: process.cwd(),
         },
         ['./']
@@ -23,5 +23,11 @@ export const getPackageName = function(){
             console.error('No myPackage.json file found in this directory!');
             console.error('To continue with this action create myPackage.json file');
         }
+        process.exit(1);
     }
+}
+
+export const pack = function(){
+    const packageName = getPackageName();
+    createPackageTar(packageName);
 }
