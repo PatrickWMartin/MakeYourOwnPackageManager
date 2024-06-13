@@ -20,7 +20,8 @@ export const getPackageName = function(){
     } catch (error) {
 
         if (error.code === 'ENOENT'){
-            console.error('No myPackage.json file in this directory!');
+            console.error('No myPackage.json file found in this directory!');
+            console.error('To continue with this action create myPackage.json file');
         }
     }
 }
