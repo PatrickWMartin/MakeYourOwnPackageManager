@@ -1,8 +1,7 @@
 #! /usr/bin/env node
 import { createMyPackageJsonFile } from '../src/myPackageJsonCreation.js'
-import { createPackageTar } from '../src/publishPackage.js'
 import { usageGuide } from '../src/informationalFunctions.js';
-import { getPackageName } from '../src/publishPackage.js';
+import { pack } from '../src/publishPackage.js';
 
 const args = process.argv;
 
@@ -22,6 +21,9 @@ switch(args[2]) {
     case 'install':
         console.log('install called');
         break
+    case 'pack':
+        pack();
+        break;
     case 'publish':
         console.log('publish called');
         getPackageName();
