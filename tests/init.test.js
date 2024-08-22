@@ -1,4 +1,4 @@
-import {init, createPackageJsonText} from '../dist/init.js';
+import { createPackageJsonText } from '../dist/init.js';
 
 describe('init tests', () => {
     // test('call init function', () => {
