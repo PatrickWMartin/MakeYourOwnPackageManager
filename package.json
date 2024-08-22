@@ -4,6 +4,7 @@
   "description": "A project to make my own version of a package manager based of npm",
   "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "dev": "tsc -w",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
