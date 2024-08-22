@@ -7,7 +7,7 @@ const prompt = promptSync();
 
 export const createPackageJsonFile = function(){
     const packageJsonText = getUserInputAndGeneratePackageJsonText();
-    console.log(`About to write to ${process.cwd()}package.json:`)
+    console.log(`About to write to ${process.cwd()} package.json:`)
     console.log();
     console.log(packageJsonText);
     const isOk = prompt('Is this OK? (yes)');

@@ -1,9 +1,6 @@
 import { createPackageJsonText } from '../dist/init.js';
 
 describe('init tests', () => {
-    // test('call init function', () => {
-    //    init(); 
-    // });
 
     test('create default package.json output', () => {
         const testObject = {
@@ -77,5 +74,4 @@ describe('init tests', () => {
             .toBe(expectedValue)
 
     });
-
 });
